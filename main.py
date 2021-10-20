@@ -1,9 +1,7 @@
-import pymongo
-from flask import Flask, request, render_template, redirect, url_for
 import pickle
-import joblib
 import numpy as np
-from pymongo import MongoClient
+import pandas as pd
+from flask import Flask, request, render_template
 from flask_pymongo import PyMongo
 import warnings
 warnings.filterwarnings('ignore')
@@ -13,7 +11,8 @@ pickled_model = pickle.load(open('random_forest_model.pkl', 'rb'))
 app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = 'patient_database'
-app.config["MONGO_URI"] = 'mongodb+srv://thyroid:project@ahmad.5gjdl.mongodb.net/patient_database?retryWrites=true&w=majority'
+app.config[
+    "MONGO_URI"] = 'mongodb+srv://thyroid:project@ahmad.5gjdl.mongodb.net/patient_database?retryWrites=true&w=majority'
 
 mongo = PyMongo(app)  # connector
 
@@ -26,7 +25,6 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-
     db = mongo.db.patient_data_collection
 
     age = float(request.form.get('age', False))
@@ -50,6 +48,17 @@ def predict():
     hypopituitary = float(request.form.get('hypopituitary', False))
     psych = float(request.form.get('psych', False))
 
+    # values = ({"age": [age], "sex": [sex],
+    #            "TSH": TSH, "T3": T3, "T4U": T4U, "FTI": FTI,
+    #            "onthyroxine": [onthyroxine], "queryonthyroxine": [queryonthyroxine],
+    #            "onantithyroidmedication": [onantithyroidmedication],
+    #            "sick": [sick], "pregnant": [pregnant], "thyroidsurgery": [thyroidsurgery],
+    #            "I131treatment": [I131treatment],
+    #            "queryhypothyroid": [queryhypothyroid], "queryhyperthyroid": [queryhyperthyroid],
+    #            "lithium": [lithium], "goitre": [goitre], "tumor": [tumor],
+    #            "hypopituitary": [hypopituitary],
+    #            "psych": [psych]})
+
     values = ({"age": age, "sex": sex,
                "TSH": TSH, "T3": T3, "T4U": T4U, "FTI": FTI,
                "onthyroxine": onthyroxine, "queryonthyroxine": queryonthyroxine,
@@ -61,10 +70,31 @@ def predict():
                "hypopituitary": hypopituitary,
                "psych": psych})
 
-    my_data = db.insert_one(values)
+    insert_data = db.insert_one(values)
 
-    arr = np.array([[age, sex,
-                     TSH, T3, T4U, FTI,
+    df_transform = pd.DataFrame.from_dict([values])
+
+    # print("applying transformation\n")
+
+    df_transform.age = df_transform['age'] ** (1 / 2)
+    print(df_transform.age)
+
+    df_transform.TSH = np.log1p(df_transform['TSH'])
+    # print(df_transform.TSH)
+    #
+    df_transform.T3 = df_transform['T3'] ** (1 / 2)
+    # print(df_transform.T3)
+
+    df_transform.T4U = np.log1p(df_transform['T4U'])
+    # print(df_transform.T4U)
+
+    df_transform.FTI = df_transform['FTI'] ** (1 / 2)
+    # print(df_transform.FTI)
+
+    df_transform.to_dict()
+
+    arr = np.array([[df_transform.age, sex,
+                     df_transform.TSH, df_transform.T3, df_transform.T4U, df_transform.FTI,
                      onthyroxine, queryonthyroxine,
                      onantithyroidmedication,
                      sick, pregnant, thyroidsurgery,
@@ -73,6 +103,9 @@ def predict():
                      lithium, goitre, tumor,
                      hypopituitary,
                      psych]])
+
+    # print("After transforamtion:\n")
+    # print(arr)
 
     pred = pickled_model.predict(arr)[0]
 
@@ -87,4 +120,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, port=5000)
