@@ -20,7 +20,7 @@ mongo = PyMongo(app)  # connector
 @app.route('/')
 def home():
     online_uses = mongo.db.users.find({"online": True})
-    return render_template('index.html', online_uses=online_uses)
+    return render_template('index.html', online_uses = online_uses)
 
 
 @app.route('/predict', methods=['POST'])
@@ -70,7 +70,7 @@ def predict():
                "hypopituitary": hypopituitary,
                "psych": psych})
 
-    insert_data = db.insert_one(values)
+    # insert_data = db.insert_one(values)
 
     df_transform = pd.DataFrame.from_dict([values])
 
@@ -104,7 +104,7 @@ def predict():
                      hypopituitary,
                      psych]])
 
-    # print("After transforamtion:\n")
+    # print("After transformation:\n")
     # print(arr)
 
     pred = pickled_model.predict(arr)[0]
@@ -116,7 +116,7 @@ def predict():
     else:
         res_Val = 'Negative'
 
-    return render_template('index.html', prediction_text='Patient has {}'.format(res_Val))
+    return render_template('result.html', prediction_text='Result: {}'.format(res_Val))
 
 
 if __name__ == '__main__':
