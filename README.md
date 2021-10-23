@@ -26,7 +26,7 @@ https://github.com/ahmadtaquee/thyroid-classification-end_to_end-deployment/blob
 
 Code is written in Python 3.7. If you don't have python installed on your system, click here https://www.python.org/downloads/ to install.
 
-- Create virtual environment - conda create -n myenv python=3.9
+- Create virtual environment - conda create -n myenv python=3.7
 - Activate the environment - conda activate myenv
 - Install the packages - pip install -r requirements.txt
 - Run the app - python main.py
