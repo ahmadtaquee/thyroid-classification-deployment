@@ -25,6 +25,7 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
+
     db = mongo.db.patient_data_collection
 
     age = float(request.form.get('age', False))

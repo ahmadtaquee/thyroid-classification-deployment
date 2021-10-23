@@ -23,14 +23,15 @@
         <div class="card-body">
 
           <form class="form" action="/predict" method="POST">
+
             <label for="age">Age</label><br>
             <input type="number" class="form-control" name="age" id="age" min="1" max="100" placeholder="(1, 100)" step="any" required><br>
 
             <label for="sex">Sex</label><br>
             <input type="number" class="form-control" name="sex" id="sex" min="0" max="1" placeholder="Male - 1, Female - 0" required><br>
 
-            <label for="tsh">Thyroid Stimulating Hormone Level</label><br>
-            <input type="number" class="form-control" name="TSH" id="tsh" min="0.005" max="478.0" placeholder="(0.005, 478.0)" step="any" required><br>
+            <label for="tsh" >Thyroid Stimulating Hormone Level</label><br>
+            <input type="number" class="form-control" name="TSH" id="tsh" min="0.005" max="478.0" placeholder="(0.005, 478.0)" step="any" required ><br>
 
             <label for="t3">T3 Level</label><br>
             <input type="number" class="form-control" name="T3" id="t3" min="0.05" max="10.6" placeholder="(0.05, 10.6)" step="any" required><br>
@@ -83,7 +84,8 @@
             <label for="psych">Psychological Symptoms</label><br>
             <input type="number" class="form-control" name="psych" id="psych" min="0" max="1" placeholder="Yes - 1, No - 0" required><br>
 
-            <input type="submit" class="btn btn-primary btn-block btn-lg" value="Predict"><br>
+<!--            <input type="submit" class="btn btn-primary btn-block btn-lg" value="Predict"><br>-->
+            <center><b><input type="submit" name="sb" value="Predict" class="sub btn btn-primary"></p> <br></b></center>
 
           </form>
 
