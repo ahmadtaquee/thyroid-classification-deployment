@@ -71,7 +71,7 @@ def predict():
                "hypopituitary": hypopituitary,
                "psych": psych})
 
-    # insert_data = db.insert_one(values)
+    insert_data = db.insert_one(values)
 
     df_transform = pd.DataFrame.from_dict([values])
 
