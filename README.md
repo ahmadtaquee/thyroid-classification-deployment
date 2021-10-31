@@ -5,7 +5,7 @@ Thyroid disease a very common problem in India, more than one crore people are s
 
 The main objective of this project is to predict if a person is having hypothyroid, hyperthyroid, or negative (no thyroid) with the help of Machine Learning. Classification algorithms such as Logistic regression, Random Forest, Decision Tree, Naïve Bayes, Support Vector Machine have been trained on the thyroid dataset, UCI Machine Learning repository. Random Forest performed well with better accuracy (96.6%), precision and recall. After that, application has deployed on Heroku with the help of flask.
 
-# Website Link
+# Website Link (Thyroid Disease Detection)
 
 https://thyroid-classification.herokuapp.com/
 
@@ -17,7 +17,7 @@ https://github.com/ahmadtaquee/thyroid-classification-end_to_end-deployment/blob
 
 - Python 3.7
 - Front-end: HTML, CSS, Bootstrap
-- Back-end: Flask
+- Back-end: Flask framework
 - IDE: Jupyter Notebook, PyCharm
 - Database: MongoDB Atlas
 - Deployment: Heroku
@@ -26,14 +26,14 @@ https://github.com/ahmadtaquee/thyroid-classification-end_to_end-deployment/blob
 
 Code is written in Python 3.7. If you don't have python installed on your system, click here https://www.python.org/downloads/ to install.
 
-- Create virtual environment - conda create -n myenv python=3.7
-- Activate the environment - conda activate myenv
-- Install the packages - pip install -r requirements.txt
-- Run the app - python main.py
+- Create virtual environment: conda create -n myenv python=3.7
+- Activate the environment: conda activate myenv
+- Install the packages: pip install -r requirements.txt
+- Run the app: python main.py
 
 # Data Collection
 
-Thyroid Disease Data Set from UCI Machine Learning Repository
+The dataset is collected from UCI Machine Learning Repository, "Thyroid Disease Detection"
 
 # Model Creation and Evaluation
 
